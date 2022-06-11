@@ -19,6 +19,10 @@ class Param:
 
 class BCP:
     def __init__(self, secparam=1024, param=None) -> None:
+        def g_finder(n2: decimal):
+            for i in range(2, n2):
+                if ((i ** (self.pp *self.qq)) % n2) % self.N == 1:
+                    return i
         if param:
             self.N = param.N
             self.g = param.g
@@ -45,8 +49,10 @@ class BCP:
             # Pick a pair of random number k and s
             self.k, s = randint(1, self.N), randint(0, self.N)
             # g = (((1+kN) + s(N^2)) ^ (1/(p'q'))) mod N^2
-            self.g = (1 + self.k * self.N + s * self.n2) ** (1 /
-                                                             Decimal(self.pp * self.qq)) % self.n2
+            # self.g = (1 + self.k * self.N + s * self.n2) ** (1 /
+            #                                                  Decimal(self.pp * self.qq)) % self.n2
+            self.g = g_finder(self.n2)
+
         self.key_renew()
 
     def set_param(self, param: Param) -> None:
